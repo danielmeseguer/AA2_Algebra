@@ -10,10 +10,10 @@ void keyPressed() {
   if (key == ' ') moverEspacio = true;
   if (keyCode == SHIFT) moverShift = true;
   if (keyCode == LEFT) {
-    solicitarCambioCurva(0);
+    curveChange(0);
   }
 if (keyCode == RIGHT) {
-    solicitarCambioCurva(1);
+    curveChange(1);
   }
 }
 
