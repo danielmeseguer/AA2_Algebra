@@ -12,8 +12,22 @@ void keyPressed() {
   if (keyCode == LEFT) {
     curveChange(0);
   }
-if (keyCode == RIGHT) {
+  if (keyCode == RIGHT) {
     curveChange(1);
+  }
+  
+  if (key == 'v' || key == 'V') vientoActivo = !vientoActivo;
+  if (key == '+') fuerzaViento += 0.2;
+  if (key == '-') {
+    fuerzaViento -= 0.2;
+    fuerzaViento = max(0, fuerzaViento);
+  }
+  
+  if (key == 'f' || key == 'F') friccionActiva = !friccionActiva;
+  if (key == 'q' || key == 'Q') coefFriccion += 0.01;
+  if (key == 'e' || key == 'E') {
+    coefFriccion -= 0.01;
+    coefFriccion = max(0, coefFriccion);
   }
 }
 

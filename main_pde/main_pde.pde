@@ -11,9 +11,9 @@ void setup() {
   initLeaderCurve();
 
   for (int i = 1; i < numPeces; i++) {
-    float x = random(MIN_X + 30, MAX_X - 30);
-    float y = random(MIN_Y + 30, MAX_Y - 30);
-    float z = random(MIN_Z + 30, MAX_Z - 30);
+    float x = (0);
+    float y = (0);
+    float z = (0);
 
     peces[i] = new Pez(x, y, z, false);
   }
@@ -31,6 +31,7 @@ void draw() {
 
   moverDestino();
   updateLeaderCurve();
+  updateFishes();
 
   dibujarPecera();
   dibujarSuelo();

@@ -13,18 +13,22 @@ void initLeaderInterpolation() {
   curvas.clear();
 
   PVector[] puntos = {
-    new PVector(-150, 220, -120),
-    new PVector(-60, 180, -200),
-    new PVector(80, 200, -160),
-    new PVector(160, 240, -40),
-    new PVector(120, 260, 120),
-    new PVector(0, 250, 180),
-    new PVector(-120, 230, 100)
+    new PVector(-180, 220, -120), // P0 inicio
+    new PVector(-80,  210, -200), // P1
+    new PVector(80,   210, -200), // P2
+    new PVector(180,  220, -120), // P3
+
+    new PVector(200,  240,  40),  // P4
+    new PVector(80,   260,  180), // P5
+    new PVector(-80,  260,  180), // P6
+
+    new PVector(-200, 240,  40),  // P7
+    new PVector(-220, 230, -60)   // P8
   };
 
   agregarCurva(puntos[0], puntos[1], puntos[2], puntos[3]);
-  agregarCurva(puntos[3], puntos[4], puntos[5], puntos[0]);
-  agregarCurva(puntos[0], puntos[1], puntos[2], puntos[3]);
+  agregarCurva(puntos[3], puntos[4], puntos[5], puntos[6]);
+  agregarCurva(puntos[6], puntos[7], puntos[8], puntos[0]);
 
   for (InterpolationCurve c : curvas) {
     c.calcularCoeficientes();

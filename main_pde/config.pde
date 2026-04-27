@@ -29,7 +29,7 @@ boolean moverShift = false;
 
 // Peces
 Pez[] peces;
-int numPeces = 5;
+int numPeces = 200;
 PShape[] modeloPez;
 
 // Curvas del Líder
@@ -55,3 +55,14 @@ int tipoCurvaObjetivo = 0;
 
 float velocidadTransicion = 2.5;
 float distanciaLlegadaTransicion = 5.0;
+
+// Movimiento de los peces
+PVector viento = new PVector(0.2, 0, 0);
+
+boolean vientoActivo = true;
+boolean friccionActiva = true;
+
+float maxVelPez = 3.0;
+float radioFrenado = 50.0;
+float fuerzaViento = 1.0;
+float coefFriccion = 0.04;
