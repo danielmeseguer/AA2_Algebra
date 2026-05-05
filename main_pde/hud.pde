@@ -35,7 +35,7 @@ void drawHUD() {
   info += "SHIFT -> bajar\n\n";
   
   info += "FÍSICA:\n";
-  info += "V -> viento: " + (vientoActivo ? "ON" : "OFF") + "\n";
+  info += "V -> corriente: " + (vientoActivo ? "ON" : "OFF") + "\n";
   info += "- / + -> corriente: " + nf(fuerzaViento, 1, 2) + "\n";
   info += "F -> friccion: " + (friccionActiva ? "ON" : "OFF") + "\n";
   info += "Q / E -> friccion: " + nf(coefFriccion, 1, 2) + "\n\n";
