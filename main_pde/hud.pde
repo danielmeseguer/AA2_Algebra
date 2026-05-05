@@ -15,8 +15,18 @@ void dibujarHUD() {
   info += "CONTROLES:\n";
   info += "1 -> Vista isometrica\n";
   info += "2 -> Vista superior\n\n";
+  
+  info += "\nCONTROL ACTUAL: ";
+  if (modoControl == 0) {
+    info += "Destino\n";
+  } else {
+    info += "Obstaculo " + (obstaculoSeleccionado + 1) + "\n";
+  }
+  
+  info += "0 -> escoger destino\n";
+  info += "4/5/6/7 -> escoger obstaculos\n";
 
-  info += "MOVER DESTINO:\n";
+  info += "MOVER DESTINO/ Obstáculos:\n";
   info += "W A S D -> mover en plano\n";
   info += "ESPACIO -> subir\n";
   info += "SHIFT -> bajar\n\n";

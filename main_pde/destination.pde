@@ -1,28 +1,43 @@
 void moverDestino() {
+  PVector objetivo;
+
+  if (modoControl == 0) {
+    objetivo = destino;
+  } else {
+    if (obstaculoSeleccionado < 0 || obstaculoSeleccionado >= obstaculos.length) return;
+    objetivo = obstaculos[obstaculoSeleccionado].pos;
+  }
+  
   if (vistaIsometrica){
-  if (moverW) destino.z -= velocidadDestino;
-  if (moverS) destino.z += velocidadDestino;
-  if (moverA) destino.x -= velocidadDestino;
-  if (moverD) destino.x += velocidadDestino;
+  if (moverW) objetivo.z -= velocidadDestino;
+  if (moverS) objetivo.z += velocidadDestino;
+  if (moverA) objetivo.x -= velocidadDestino;
+  if (moverD) objetivo.x += velocidadDestino;
   }else{
-  if (moverW) destino.z += velocidadDestino;
-  if (moverS) destino.z -= velocidadDestino;
-  if (moverA) destino.x += velocidadDestino;
-  if (moverD) destino.x -= velocidadDestino;
+  if (moverW) objetivo.z += velocidadDestino;
+  if (moverS) objetivo.z -= velocidadDestino;
+  if (moverA) objetivo.x += velocidadDestino;
+  if (moverD) objetivo.x -= velocidadDestino;
   }
   
 
   // Y menor = más arriba
-  if (moverEspacio) destino.y -= velocidadDestino;
-  if (moverShift) destino.y += velocidadDestino;
+  if (moverEspacio) objetivo.y -= velocidadDestino;
+  if (moverShift) objetivo.y += velocidadDestino;
 
-  limitarDestino();
+  limitarDestino(objetivo);
 }
 
-void limitarDestino() {
-  destino.x = constrain(destino.x, MIN_X + radioDestino, MAX_X - radioDestino);
-  destino.y = constrain(destino.y, MIN_Y + radioDestino, MAX_Y - radioDestino);
-  destino.z = constrain(destino.z, MIN_Z + radioDestino, MAX_Z - radioDestino);
+void limitarDestino(PVector p) {
+  float radio = radioDestino;
+
+  if (modoControl == 1 && obstaculoSeleccionado >= 0) {
+    radio = obstaculos[obstaculoSeleccionado].radio;
+  }
+
+  p.x = constrain(p.x, MIN_X + radio, MAX_X - radio);
+  p.y = constrain(p.y, MIN_Y + radio, MAX_Y - radio);
+  p.z = constrain(p.z, MIN_Z + radio, MAX_Z - radio);
 }
 
 void dibujarDestino() {

@@ -1,12 +1,50 @@
 void updateBoid(Pez pez) {
   if (pez.esLider) return;
+  
+  if (pez.cooldownReproduccion > 0) {
+    pez.cooldownReproduccion = pez.cooldownReproduccion - 0.1f;
+  }
+  
+  actualizarSleep(pez);
+
+  if (pez.isSleepy) {
+    aplicarFuerza(pez, seguirObjetivo(pez, camaPos, 1.0));
+    aplicarFuerza(pez, fuerzaEvitarObstaculos(pez));
+    aplicarFuerza(pez, fuerzaBordes(pez));
+  
+    float distanciaCama = PVector.dist(pez.pos, camaPos);
+  
+    if (distanciaCama < radioCama * 1.5) {
+      aplicarFriccionExtra(pez, 0.25);
+    }
+  
+    if (distanciaCama < radioCama) {
+      pez.energia += 0.4;
+  
+      aplicarFriccionExtra(pez, 0.4);
+  
+      if (pez.energia >= 100) {
+        pez.energia = 100;
+        pez.isSleepy = false;
+      }
+    }
+  
+    if (friccionActiva) {
+      aplicarFriccion(pez);
+    }
+  
+    moverVerlet(pez);
+    return;
+  }
 
   PVector objetivoLider = PVector.add(peces[0].pos, pez.offsetLider);
   
   aplicarFuerza(pez, seguirObjetivo(pez, objetivoLider, pez.pesoLider));
   aplicarFuerza(pez, seguirObjetivo(pez, destino, pez.pesoDestino));
+  aplicarFuerza(pez, fuerzaGrupo(pez));
   aplicarFuerza(pez, fuerzaOrbital(pez));
   aplicarFuerza(pez, fuerzaBordes(pez));
+  aplicarFuerza(pez, fuerzaEvitarObstaculos(pez));
 
   if (vientoActivo) {
     PVector fViento = viento.copy();
@@ -56,7 +94,7 @@ void aplicarFriccion(Pez pez) {
 }
 
 void moverVerlet(Pez pez) {
-  float dt = 0.2;
+  float dt = 0.32;
 
   PVector temp = pez.pos.copy();
   PVector velocidad = PVector.sub(pez.pos, pez.oldPos);
@@ -115,4 +153,71 @@ PVector fuerzaOrbital(Pez pez) {
   tangente.mult(0.035);
 
   return tangente;
+}
+
+PVector fuerzaEvitarObstaculos(Pez pez) {
+  PVector total = new PVector();
+
+  for (int i = 0; i < obstaculos.length; i++) {
+    Obstaculo o = obstaculos[i];
+
+    PVector dir = PVector.sub(pez.pos, o.pos);
+    float distancia = dir.mag();
+    float radioPez = 50;
+    float rango = o.radio + radioPez + 60;
+
+    if (distancia < rango && distancia > 0.001) {
+      dir.normalize();
+
+      float intensidad = map(distancia, 0, rango, 1.5, 0);
+      dir.mult(intensidad);
+
+      total.add(dir);
+    }
+  }
+
+  return total;
+}
+
+PVector fuerzaGrupo(Pez pez) {
+  PVector centro = new PVector();
+  int contador = 0;
+
+  float radioVecinos = 90;
+
+  for (int i = 1; i < peces.length; i++) {
+    Pez otro = peces[i];
+
+    if (otro != null && otro != pez) {
+      float d = PVector.dist(pez.pos, otro.pos);
+
+      if (d < radioVecinos) {
+        centro.add(otro.pos);
+        contador++;
+      }
+    }
+  }
+
+  if (contador == 0) {
+    return new PVector();
+  }
+
+  centro.div(contador);
+
+  return seguirObjetivo(pez, centro, pesoGrupo);
+}
+
+void actualizarSleep(Pez pez) {
+  pez.energia -= pez.cansancio;
+
+  if (pez.energia <= 0) {
+    pez.energia = 0;
+    pez.isSleepy = true;
+  }
+}
+
+void aplicarFriccionExtra(Pez pez, float cantidad) {
+  PVector velocidad = PVector.sub(pez.pos, pez.oldPos);
+  velocidad.mult(-cantidad);
+  aplicarFuerza(pez, velocidad);
 }

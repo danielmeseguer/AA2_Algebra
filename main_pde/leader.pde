@@ -77,8 +77,11 @@ void updateLeaderCurve() {
     return;
   }
 
-  uLider += velocidadLider;
-
+  if (tipoCurva == 0) {
+    uLider += velocidadInterpolacion;
+  } else {
+    uLider += velocidadBezier;
+  }
   if (uLider > 1.0) {
   uLider = 0.0;
 
@@ -102,7 +105,11 @@ void updateLeaderCurve() {
   }
 
   if (p != null) {
-    peces[0].setPosition(p);
+    PVector evitacion = fuerzaEvitarObstaculos(peces[0]);
+    evitacion.mult(25);
+    
+    PVector posicionFinal = PVector.add(p, evitacion);
+    peces[0].setPosition(posicionFinal);
   }
 }
 

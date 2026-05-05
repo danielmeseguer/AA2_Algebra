@@ -29,6 +29,31 @@ void keyPressed() {
     coefFriccion -= 0.01;
     coefFriccion = max(0, coefFriccion);
   }
+  
+  if (key == '0') {
+    modoControl = 0;
+    obstaculoSeleccionado = -1;
+  }
+  
+  if (key == '4') {
+    modoControl = 1;
+    obstaculoSeleccionado = 0;
+  }
+  
+  if (key == '5') {
+    modoControl = 1;
+    obstaculoSeleccionado = 1;
+  }
+  
+  if (key == '6') {
+    modoControl = 1;
+    obstaculoSeleccionado = 2;
+  }
+  
+  if (key == '7') {
+    modoControl = 1;
+    obstaculoSeleccionado = 3;
+  }
 }
 
 void keyReleased() {
