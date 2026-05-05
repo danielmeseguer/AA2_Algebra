@@ -31,7 +31,7 @@ PShape modeloCama;
 float escalaCama = 0.30;
 float radioCama = 60;
 
-// teclas de 
+// teclas de control
 int modoControl = 0; // 0 = destino, 1 = obstaculo
 boolean moverW = false;
 boolean moverA = false;
@@ -43,7 +43,7 @@ boolean moverShift = false;
 // Peces
 Pez[] peces;
 int numPeces = 20;
-PShape[] modeloPez;
+PShape modeloPez;
 float escalaObjetivo;
 
 // Curvas del Líder

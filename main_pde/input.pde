@@ -1,3 +1,4 @@
+// Input de teclas
 void keyPressed() {
   if (key == '1') vistaIsometrica = true;
   if (key == '2') vistaIsometrica = false;
@@ -56,6 +57,7 @@ void keyPressed() {
   }
 }
 
+// Reseteo de input de teclas al soltarlas
 void keyReleased() {
   if (key == 'w' || key == 'W') moverW = false;
   if (key == 'a' || key == 'A') moverA = false;

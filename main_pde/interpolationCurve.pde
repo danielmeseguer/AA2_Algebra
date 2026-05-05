@@ -1,5 +1,5 @@
 class InterpolationCurve {
-  PVector[] controlPoints;
+  PVector[] controlPoints;  // Puntos por los que la curva debe pasar
   PVector[] coefficients;
 
   InterpolationCurve(PVector[] cp) {
@@ -7,11 +7,12 @@ class InterpolationCurve {
     coefficients = new PVector[4];
 
     for (int i = 0; i < 4; i++) {
-      controlPoints[i] = cp[i];
-      coefficients[i] = new PVector();
+      controlPoints[i] = cp[i];  // Guardamos los 4 puntos de interpolación
+      coefficients[i] = new PVector();  // Reservamos espacio para cada coeficiente
     }
   }
-
+  
+  // Calcula los coeficientes
   void calcularCoeficientes() {
     // C0
     coefficients[0] = controlPoints[0].copy();
@@ -34,7 +35,8 @@ class InterpolationCurve {
 
   PVector getPoint(float u) {
     PVector p = new PVector();
-
+    
+    // Valor del polinomio para cada cordenada
     p.x = coefficients[0].x + coefficients[1].x*u + coefficients[2].x*u*u + coefficients[3].x*u*u*u;
     p.y = coefficients[0].y + coefficients[1].y*u + coefficients[2].y*u*u + coefficients[3].y*u*u*u;
     p.z = coefficients[0].z + coefficients[1].z*u + coefficients[2].z*u*u + coefficients[3].z*u*u*u;
@@ -43,6 +45,7 @@ class InterpolationCurve {
   }
 
   void displayCurve() {
+    //Dibuja la curva interpolada en verde
     strokeWeight(3);
     stroke(0, 255, 0);
     noFill();
@@ -54,7 +57,7 @@ class InterpolationCurve {
     }
     endShape();
 
-    // puntos de control
+    // Dibujamos los puntos de control en amarillo
     strokeWeight(8);
     stroke(255, 255, 0);
     for (int i = 0; i < 4; i++) {
